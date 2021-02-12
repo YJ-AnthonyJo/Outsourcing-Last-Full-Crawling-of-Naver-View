@@ -1,0 +1,368 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"chang",
+				"change_lang_on_press〔function〕"
+			],
+			[
+				"key",
+				"keyboard"
+			],
+			[
+				"if",
+				"ifmain\tif __name__ == '__main__'"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"indtt",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"indt",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"intt",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"inde tab",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"Package Control: ",
+				"Package Control: List Packages"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: dis",
+				"Package Control: Disable Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"install pack",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/L마지막 외주"
+	],
+	"file_history":
+	[
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/외주 _ 블로그 크롤링/crawlingreallyreallyfinal.py",
+		"/C/Users/yscsc/AppData/Local/Programs/Python/Python39/Lib/random.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/CaptureVideoWithSound/ffmpeg-4.3.1-2021-01-26-full_build/bin/test.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/CaptureVideoWithSound/ffmpeg-4.3.1-2021-01-26-full_build/bin/test2.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/CaptureVideoWithSound/ffmpeg-4.3.1-2021-01-26-full_build/bin/sss.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/CaptureVideoWithSound/ffmpeg-4.3.1-2021-01-26-full_build/bin/asdf.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/screenshot.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/asdasdf.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/save to video.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/recordscreen.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/output4/crawlingFunction.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/output4/setup.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/tmp.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/0202.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/0202_1.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/Export-16922796-75df-49b2-a064-7ab80badae3c/Python dictionary 다양한 조건으로 dictionary 가 268da3ceec104b6aa41662c3ce4bd64d.html",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/Export-3a6eb705-3242-4cc0-98eb-69b94c0f6c7a/Python dictionary 다양한 조건으로 dictionary 가 268da3ceec104b6aa41662c3ce4bd64d.md",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/ffmpeg-4.3.1-2021-01-26-full_build/bin/sss.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/ffmpeg-4.3.1-2021-01-26-full_build/bin/test.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/test.py",
+		"/D/용재_Backup_2020_11_24(최종)/기존 백업/바탕화면/ROOT/공학동아리/BOTH주체 메이커 프로젝트 대회/MakerProject/MAIN.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/외주 _ 블로그 크롤링/save file.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/ROOT/Programming/Project/hangul_ime/hangul_ime_version_since_1225.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/test3.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/stest2.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/multiprocessing_queue_ flush error (2).py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/multiprocessing_queue_ flush error (2).txt",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/multiprocessing_queue_ flush error (1).txt",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/multiprocessing_queue_ flush error (3).py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/JSONDecoder (2).py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/JsonDecoder.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/multiprocessing_queue_ flush error (4).py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/multiprocessing_queue_ flush error (1).py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/multiprocessing_queue_ flush error (5).py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/multiprocessing_queue_ flush error (6).py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/multiprocessing_queue_ flush error (7).py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/세종대학교/01-26-7.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/세종대학교/01-26-실습문제.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/세종대학교/3주차 과제1.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/세종대학교/3주차 과제2.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/세종대학교/3주차 과제3.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/test2.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/세종대학교/01-26-10.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/세종대학교/01-26-9.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/세종대학교/01-26-8.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/세종대학교/01-26-6.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/세종대학교/01-26-5.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/세종대학교/01-26.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/세종대학교/01-26-2.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/세종대학교/01-26-4.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/세종대학교/01-26-3.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/multiprocessing_Process,Queue123.py",
+		"/D/용재_Backup_2020_10_09/바탕화면/20200821/메추라기/python/multiprocessing/mt1.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/ConvertToList.py",
+		"/C/Users/yscsc/AppData/Local/Programs/Python/Python39/Lib/json/tool.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/ROOT/Programming/Study/Python/Decorator/D E.py",
+		"/C/Users/yscsc/AppData/Roaming/Sublime Text 3/Packages/User/new_python.sublime-build",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/ROOT/Programming/Study/Decorator example.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/hangul_ime_특수키관련 함수 제외.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/hangul_ime.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/unicode.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/test_pynput keyboard input.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/test_tray.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/test_pynput keyboard input-1.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/hangul_ime_final_bak1204.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/multiprocessing pdb Test.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/hangul_ime_final.py",
+		"/D/용재_Backup_2020_10_09/C드라이브/mandocom/소수구하기/find sosu_v2.py",
+		"/D/용재_Backup_2020_10_09/바탕화면/20200821/메추라기/python/multiprocessing/multiprocessing-1.py",
+		"/D/용재_Backup_2020_10_09/바탕화면/20200821/메추라기/python/multiprocessing/multiprocessing_process.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/umm.py",
+		"/C/Users/yscsc/output/hangul_ime/unicodedata.pyd",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/자모 분리 해결.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/imgs to pdf.py",
+		"/C/Users/yscsc/OneDrive - 인천광역시교육청/바탕 화면/img to pdf.py",
+		"/C/Users/yscsc/OneDrive/바탕 화면/test.py",
+		"/C/Users/yscsc/AppData/Roaming/Sublime Text 3/Packages/TabNine/TabNine.sublime-settings",
+		"/C/Users/yscsc/AppData/Roaming/Sublime Text 3/Packages/User/TabNine.sublime-settings",
+		"/C/Users/yscsc/OneDrive/바탕 화면/get-pip.py"
+	],
+	"find":
+	{
+		"height": 28.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"6",
+			"shuffle",
+			"print(e)",
+			"print",
+			"미노출T",
+			"show",
+			"replaceURLCODE",
+			"오류",
+			"exposure",
+			"== ",
+			"support",
+			"freeze",
+			"))",
+			"]))",
+			"”",
+			"“",
+			"()",
+			"f",
+			"py_scanstring",
+			"BACKSLASH",
+			"py_scanstring",
+			"scanstring",
+			"make_scanner",
+			"decode",
+			"raw_decode",
+			"\"\"\"\n",
+			" =",
+			"WHITESPACE",
+			"decode",
+			"_default_decoder",
+			"isinstance",
+			"decode",
+			"py_scan",
+			"STRINGCHUNK.match",
+			"to",
+			"json-to-py-table"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"'"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 209.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 0.0
+	},
+	"output.exec":
+	{
+		"height": 126.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/Python/Python.sublime-build",
+	"project": "LastOutsourcing.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 56.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
