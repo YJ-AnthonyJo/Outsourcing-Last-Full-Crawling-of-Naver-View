@@ -11,6 +11,27 @@ import json
 import pprint
 from urllib import parse
 
+
+def get_date(target_url):
+    # https://blog.naver.com/ggtourkorea/222205886152
+    # ttps://blog.naver.com/matsu2/222154600781
+    idst = find_index(target_url, '/')[2] + 1
+    idend = find_index(target_url, '/')[3]  # logNo start
+    blog_id = target_url[idst:idend]
+    log_no = target_url[idend + 1:]
+    response = requests.get(
+        'https://blog.naver.com/PostView.nhn?blogId={}&logNo={}&redirect=Dlog&widgetTypeCall=true&directAccess=false'.format(
+            blog_id, log_no))
+    soup = bs(str(response.text), 'html.parser')
+    try:
+        date = soup.find_all(attrs={'class': 'date fil5 pcol2 _postAddDate'})[0].get_text()
+    except:
+        try:
+            date = soup.find_all(attrs={'class': 'se_publishDate pcol2'})[0].get_text()
+        except:
+            date = '오류발생, 해당 질의조건과 url을 알려주십시오'
+    return date
+
 def find_index(data, target):
     res = []
     lis = data
@@ -21,35 +42,70 @@ def find_index(data, target):
         except:
             break
     return res
-
-def get_date(target_url): # 필요
+def get_blog_posting2(id, cnt):
     """
-    # 게시물의 posting 날짜를 가져오는 함수
-    예시
-    # https://blog.naver.com/ggtourkorea/222205886152
-    # ttps://blog.naver.com/matsu2/222154600781
+    설명 : [파라미터 중 id]를 네이버 ID로 가진 사용자의 블로그의 포스팅 타이틀과 포스팅 url을 지정된 개수([피라미터 중 cnt])만큼 가져옴.
+    사용법 : get_blog_posting(사용자 id, 수집 개수)
+    return값
+    * return_string, title_url *
+    1. return_string = '입력한 수량이 블로그 전체 게시물보다 많습니다.\n블로그의 전체 게시물을 가져옵니다.fin' 혹은, 'fin'
+        전자 : 입력수량 > 전체 게시물 수량
+        후자 : 입력수량 <= 전체 게시물 수량
+    2. title_url : [[제목1, 주소1][제목2, 주소2] ... ]의 형식
     """
-    idst = find_index(target_url, '/')[2] + 1
-    idend = find_index(target_url, '/')[3]  # logNo start
-    blog_id = target_url[idst:idend]
-    log_no = target_url[idend + 1:]
-    response = requests.get(
-        'https://blog.naver.com/PostView.nhn?blogId={}&logNo={}&redirect=Dlog&widgetTypeCall=true&directAccess=false'.format(
-            blog_id, log_no))
-    soup  = bs(str(response.text), 'html.parser')
+    print("id, cnt",id, cnt)
     try:
-        date = soup.find_all(attrs={'class': 'date fil5 pcol2 _postAddDate'})[0].get_text()
-    except:
-        try:
-            date = soup.find_all(attrs={'class': 'se_publishDate pcol2'})[0].get_text()
-        except:
-            date = '오류발생, 해당 질의조건과 url을 알려주십시오'
-    return date
+        header = {'content-type':'application/x-www-form-urlencoded; charset=utf-8',
+                'referer': 'https://blog.naver.com/PostList.nhn?blogId=zawe1&categoryNo=0&from=postList/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'}
 
+        url = 'https://blog.naver.com/PostTitleListAsync.nhn?blogId={}&viewdate=&currentPage=1&categoryNo=0&parentCategoryNo=&countPerPage=30'.format(id)
+        status = requests.get(url,headers = header)
+        if  status.status_code == 404:
+            return "-1", ''
+
+        data = (status.text).replace("\\", "")
+        data = json.loads(data)
+        pprint.pprint(data)
+        total_count = data['totalCount']
+        print("total_count :",total_count)
+        # pprint.pprint(data)
+        return_string = ''
+        if (int(data['totalCount']) < cnt):
+            return_string += '입력한 수량이 블로그 전체 게시물보다 많습니다.\n블로그의 전체 게시물을 가져옵니다.'
+            cnt = int(data['totalCount'])  # 전체 게시물 개수로 설정(강제 수량 다운그레이드)
+
+        if (cnt == 0):
+            print("in here")
+            try:
+                return_string += '블로그의 전체 게시물을 가져옵니다'
+                cnt = int(total_count)
+            except Exception as e:
+                print("if :", e)
+
+        print(cnt)
+        k = 1
+        title_url = []
+        for i in range(1, cnt // 30 + 2):  # 페이지(api)
+            url = 'https://blog.naver.com/PostTitleListAsync.nhn?blogId=' + str(id) + '&viewdate=&currentPage=' + str(i) + '&categoryNo=0&parentCategoryNo=&countPerPage=30'
+            data = (requests.get(url).text).replace("\\", "")
+            data = json.loads(data)
+
+            for j in range(len(data['postList'])):  # api 페이지 안에 있는 포스팅
+                log_no = data['postList'][j]['logNo']  # 블로그 포스팅 번호?
+                blog_url = "https://blog.naver.com/" + id + "/" + log_no
+                title = parse.unquote(data['postList'][j]['title']).replace('+', ' ')
+                date = data['postList'][j]['addDate']
+                title_url.append([title, blog_url, date, cnt])
+                if k >= cnt:  # 총량을 검사하는 조건문
+                    break
+                k += 1
+
+        return return_string, title_url
+
+    except Exception as e:
+        print(e)
 def get_title(target_url):
-    """
-    # 해당 URL에 해당하는 게시물의 title과, 작성자 id를 리턴.
-    """
     idst = find_index(target_url, '/')[2] + 1
     idend = find_index(target_url, '/')[3]  # logNo start
     response = requests.get(
@@ -62,7 +118,9 @@ def get_title(target_url):
 
 
 def get_result(keywords, urlS, target, driver_path, processN, show_chrome):
-    def view_back(target_url, keyword, driver, rank=False):
+    # print(multiprocessing.current_process().name)
+    # print(processN)
+    def view(target_url, keyword, driver, rank=False):
         """
         설명 : [파라미터 중 keyword]를 필수포함 검색어(검색연산자 "")로 네이버 검색시
                 view 탭에서 [파라미터 중 target_url]을 URL로 가지는 포스팅이 있는지 확인함.
@@ -73,10 +131,19 @@ def get_result(keywords, urlS, target, driver_path, processN, show_chrome):
             1. rank=False(순위추출 x)의 경우, '노출' 혹은 '미노출'
             2. rank=True(순위추출 o)의 경우, 순위(숫자) 혹은 '미노출'
         """
+        # st_t = time.time()
         try:
-            keyword = '{}'.format(keyword)
-            driver.get("https://search.naver.com/search.naver?where=view&sm=tab_jum&query={}&qvt=0".format(keyword))  # 키워드 검색
-            driver.implicitly_wait(time_to_wait=0.3)
+            if rank == False:
+                keyword = '"{}"'.format(keyword)
+                driver.get("https://search.naver.com/search.naver?where=view&sm=tab_jum&query={}&qvt=0".format(keyword))  # 키워드 검색
+                # print("https://search.naver.com/search.naver?where=view&sm=tab_jum&query={}&qvt=0".format(keyword))
+
+                driver.implicitly_wait(time_to_wait=0.3)
+            elif rank == True:
+                keyword = '{}'.format(keyword)
+                driver.get("https://search.naver.com/search.naver?where=view&sm=tab_jum&query={}&qvt=0".format(keyword))  # 키워드 검색
+                # print("https://search.naver.com/search.naver?where=view&sm=tab_jum&query={}&qvt=0".format(keyword))
+                driver.implicitly_wait(time_to_wait=0.3)
 
             before_len_of_url = None
             n_for_break = 0
@@ -132,8 +199,6 @@ def get_result(keywords, urlS, target, driver_path, processN, show_chrome):
 
         return returns   #   #
 
-    def view(keyword, driver):
-        pass
     def find_index(data, target):
         res = []
         lis = data
