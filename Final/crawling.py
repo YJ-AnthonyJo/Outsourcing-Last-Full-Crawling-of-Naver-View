@@ -29,7 +29,7 @@ def find_index(data, target):
 
 def view(keyword, driver_path):
 #for ubuntu
-    display = Display(visible=1, size=(1920, 1080)) 
+    display = Display(visible=0, size=(1920, 1080)) 
     display.start()
 
 #chrome_options = webdriver.ChromeOptions()
@@ -67,12 +67,12 @@ def view(keyword, driver_path):
     print(len(Urls), len(rank), len(title), len(date))
     driver.close()
 #for ubuntu
-    display.quit()
+    display.stop()
 
-    return Urls, rank, title, date
+    return [Urls, title, date, rank]
 
     
 #driver_path = "..\\ROOT\\Programming\\AssociatedFiles\\chromedriver.exe"
 #for ubuntu
-driver_path = '/home/anthonyjo/Desktop/chromedriver'
-view('김포치과', driver_path)
+#driver_path = '/home/anthonyjo/Desktop/chromedriver'
+#view('김포치과', driver_path)

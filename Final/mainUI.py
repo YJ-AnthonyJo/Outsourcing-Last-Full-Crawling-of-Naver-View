@@ -9,7 +9,6 @@ from datetime import datetime
 
 
 from_class = uic.loadUiType("./UI/mainUI.ui")[0]
-checkQuery_ui = uic.loadUiType("./UI/CheckQuery.ui")[0]
 def DelOverlap(li): #추측: 중복제거
     tmp_list = []
     for v in li:
@@ -17,11 +16,12 @@ def DelOverlap(li): #추측: 중복제거
             tmp_list.append(v)
     li[:] = tmp_list # 가르키는 object는 동일하다. -> 해당 object를 수정하기 위해 [:]을 사용
 
-class CheckQueryWindow(QMainWindow, checkQuery_ui):  # noqa: F405
+class CheckQueryWindow(QDialog):  # noqa: F405
     def __init__(self, Queryes):
-        super().__init__()
+        QDialog.__init__(self, None)
+        uic.loadUi('./UI/CheckQuery.ui', self)
+
         self.Queryes = Queryes
-        self.setupUi(self)
         self.setFixedSize(172, 262)
         self.QueryBrowseAndEdit_PTextEdit.setLineWrapMode(0)
         self.QueryBrowseAndEdit_PTextEdit.setPlainText('\n'.join(Queryes))

@@ -8,7 +8,6 @@ import pandas as pd
 from datetime import datetime
 
 
-from_class = uic.loadUiType("./UI/mainUI.ui")[0]
 checkQuery_ui = uic.loadUiType("./UI/CheckQuery.ui")[0]
 def DelOverlap(li): #추측: 중복제거
     tmp_list = []
@@ -17,11 +16,12 @@ def DelOverlap(li): #추측: 중복제거
             tmp_list.append(v)
     li[:] = tmp_list # 가르키는 object는 동일하다. -> 해당 object를 수정하기 위해 [:]을 사용
 
-class CheckQueryWindow(QMainWindow, checkQuery_ui):  # noqa: F405
+class CheckQueryWindow(QDialog):  # noqa: F405
     def __init__(self, Queryes):
-        super().__init__()
+        QDialog.__init__(self, None)
+        uic.loadUi("./UI/CheckQuery.ui", self)
+
         self.Queryes = Queryes
-        self.setupUi(self)
         self.setFixedSize(172, 262)
         self.QueryBrowseAndEdit_PTextEdit.setLineWrapMode(0)
         self.QueryBrowseAndEdit_PTextEdit.setPlainText('\n'.join(Queryes))
@@ -37,13 +37,13 @@ class CheckQueryWindow(QMainWindow, checkQuery_ui):  # noqa: F405
             DelOverlap(self.Queryes)
             self.close()
 
-class WindowClass(QMainWindow, from_class):  # noqa: F405
+class WindowClass(QDialog):  # noqa: F405
     Queryes = []
     changed_item = []
     def __init__(self):
-        super().__init__()
-        self.setupUi(self)
-#self.setFixedSize(640, 480)
+        QDialog.__init__(self,None)
+        uic.loadUi("./UI/mainUI_by_mainwindow.ui",self)
+        self.setWindowFlags(self.windowFlags() | QtCore.Qt.WindowMaximizeButtonHint )
 
         self.AddQuery_btn.clicked.connect(self.AssociatedQuery('Func_AddQuery_btn'))
         self.Query_LineEdit.returnPressed.connect(self.AssociatedQuery('Func_AddQuery_btn'))
@@ -57,7 +57,6 @@ class WindowClass(QMainWindow, from_class):  # noqa: F405
         self.ViewResult_table.setEditTriggers(QTableWidget.NoEditTriggers)  # noqa: F405
         self.FlagEditable_chbox.stateChanged.connect(self.AssociatedTable('Func_FlagEditable_chbox'))
         self.SelectKeyword_cbox.currentIndexChanged.connect(self.AssociatedTable('Func_SelectKeyword_cbox'))
-#self.SelectKeyword_cbox.activated.connect(self.AssociatedTable('Func_ViewResult_table_admitChange')
         self.changeAdmit_btn.setEnabled(False)
         self.changeAdmit_btn.clicked.connect(self.AssociatedTable('Func_ViewResult_table_admitChanges'))
         self.ViewResult_table.cellDoubleClicked.connect(self.AssociatedTable('Func_ViewResult_table_doubleClicked'))
