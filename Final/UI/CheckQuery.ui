@@ -6,39 +6,32 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>170</width>
+    <width>218</width>
     <height>262</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Querys</string>
   </property>
-  <widget class="QPlainTextEdit" name="QueryBrowseAndEdit_PTextEdit">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>171</width>
-     <height>231</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="Save_btn">
-   <property name="geometry">
-    <rect>
-     <x>37</x>
-     <y>233</y>
-     <width>93</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>ESC키 : 자동저장 및 종료</string>
-   </property>
-   <property name="text">
-    <string>Save</string>
-   </property>
-  </widget>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QPlainTextEdit" name="QueryBrowseAndEdit_PTextEdit"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Save_btn">
+       <property name="toolTip">
+        <string>ESC키 : 자동저장 및 종료</string>
+       </property>
+       <property name="text">
+        <string>Save</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

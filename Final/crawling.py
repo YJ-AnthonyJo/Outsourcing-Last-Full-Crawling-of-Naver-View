@@ -37,7 +37,10 @@ def view(keyword, driver_path):
 #chrome_options.add_argument('--disable-gpu')
 #chrome_options.add_argument('lang=ko_KR')
 #driver = webdriver.Chrome(str(driver_path), chrome_options=chrome_options)  # 드라이버 설정
-    driver = webdriver.Chrome(driver_path) # 드라이버 설정
+    try:
+        driver = webdriver.Chrome(driver_path) # 드라이버 설정
+    except:
+        return 'driver_path Error'
 
     keyword = '{}'.format(keyword)
     driver.get("https://search.naver.com/search.naver?where=view&sm=tab_jum&query={}&qvt=0".format(keyword))  # 키워드 검색
@@ -48,11 +51,12 @@ def view(keyword, driver_path):
         action.move_to_element(last).perform()
         driver.implicitly_wait(time_to_wait=0.3)
         height = driver.execute_script("return document.body.scrollHeight")
-        print(height)
         time.sleep(0.5)
         if len(driver.find_elements_by_xpath('//*[@class="review_loading _trigger_base"]'))==0:
-             print("Scroll Finished, Please Check.")
-             break
+            time.sleep(1)
+            if len(driver.find_elements_by_xpath('//*[@class="review_loading _trigger_base"]'))==0:
+                 print(keyword, "Scroll Finished, Please Check.")
+                 break
 
     li = driver.find_element_by_xpath('//ul[@Class="lst_total _list_base"]')
     html = li.get_attribute('innerHTML')
@@ -64,7 +68,7 @@ def view(keyword, driver_path):
     rank = [li_.get_attribute('data-cr-rank') for li_ in li.find_elements_by_xpath('//li[@class="bx _svp_item"]')]
 
     date = [k.get_text() for k in soup.find_all(attrs={'class': 'sub_time sub_txt'})]
-    print(len(Urls), len(rank), len(title), len(date))
+    print('Data개수 :', len(Urls), len(rank), len(title), len(date))
     driver.close()
 #for ubuntu
     display.stop()

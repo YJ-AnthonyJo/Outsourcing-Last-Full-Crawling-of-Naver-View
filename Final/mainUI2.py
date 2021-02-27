@@ -8,7 +8,7 @@ import pandas as pd
 from datetime import datetime
 
 
-from_class = uic.loadUiType("./UI/mainUI.ui")[0]
+from_class = uic.loadUiType("./UI/mainUI_V2.ui")[0]
 def DelOverlap(li): #추측: 중복제거
     tmp_list = []
     for v in li:
@@ -47,18 +47,6 @@ class WindowClass(QMainWindow, from_class):  # noqa: F405
 #self.setFixedSize(640, 480)
         self.resize(640,600)
         self.setWindowTitle('View전체수집')
-        self.chrome_driver_toggle.setStyleSheet("QToolButton { border: none; }")
-        self.chrome_driver_toggle.setToolButtonStyle(
-            QtCore.Qt.ToolButtonTextBesideIcon
-        )
-        self.chrome_driver_toggle.setCheckable(True)
-        self.chrome_driver_toggle.setArrowType(QtCore.Qt.RightArrow)
-        self.chrome_driver_toggle.clicked.connect(self.on_pressed)
-
-        self.toggle_animation = QtCore.QParallelAnimationGroup(self)
-        self.FileDIR_Browser_2.hide()
-        self.openFile_btn_2.hide()
-#self.verticalSpacer_3.setEnabled(False)
 
         self.AddQuery_btn.clicked.connect(self.AssociatedQuery('Func_AddQuery_btn'))
         self.Query_LineEdit.returnPressed.connect(self.AssociatedQuery('Func_AddQuery_btn'))
@@ -78,24 +66,35 @@ class WindowClass(QMainWindow, from_class):  # noqa: F405
         self.ViewResult_table.cellDoubleClicked.connect(self.AssociatedTable('Func_ViewResult_table_doubleClicked'))
         self.SaveAsFIle_btn.clicked.connect(self.Func_SaveAsFile_btn)
 
-    def on_pressed(self):
-        checked = self.chrome_driver_toggle.isChecked()
-        self.chrome_driver_toggle.setArrowType(
-            QtCore.Qt.DownArrow if checked else QtCore.Qt.RightArrow
-        )
-        self.toggle_animation.setDirection(
-            QtCore.QAbstractAnimation.Forward
-            if not checked
-            else QtCore.QAbstractAnimation.Backward
-        )
-        self.toggle_animation.start()
-        if checked:
-            self.FileDIR_Browser_2.show()
-            self.openFile_btn_2.show()
-        else:
-            self.FileDIR_Browser_2.hide()
-            self.openFile_btn_2.hide()
+        f = open('tmp.txt','r')
+        self.driver_path = f.readlines()[0]
+        if self.driver_path[-1] == '\n':
+            self.driver_path = self.driver_path[:-1]
+        for_display = (self.driver_path[:40]+'  ...  '+self.driver_path[-40:]) if len(self.driver_path) > 100 else self.driver_path
+        self.show_current_path = QAction('현제경로 : '+ for_display, self)
+        chrome_action = QAction('&ChromeDriver경로 설정', self)
+        chrome_action.triggered.connect(self.chrome)
+        
+        menubar = self.menuBar()
+        chrome_driver = self.menubar.addMenu('&Chrome Driver')
+        chrome_driver.addAction(self.show_current_path)
+        chrome_driver.addAction(chrome_action)
 
+
+    def chrome(self):
+        fname = QFileDialog.getOpenFileName(self)  # noqa: F405 # file창 하나 열기
+
+        self.driver_path = fname[0] if fname[0] !='' else self.driver_path
+        for_display = (self.driver_path[:40]+'  ...  '+self.driver_path[-40:]) if len(self.driver_path) > 100 else self.driver_path
+        self.show_current_path.setText('현제경로 : '+ for_display)
+
+        f = open('tmp.txt', 'r')
+        tmp = f.readlines()
+        tmp[0] = self.driver_path + '\n'
+        f.close()
+        f = open('tmp.txt','w')
+        f.writelines(tmp)
+        f.close()
     def AssociatedQuery(self, funcName):
         # Query(keyword input)과 관련있는 Function들의 집합
         def Func_openFile_btn(): 
@@ -125,7 +124,7 @@ class WindowClass(QMainWindow, from_class):  # noqa: F405
         def FileDIR_Default():
             # 실행조건 : 초기 설정(초기 1회만 실행됨)
             # 동작 : \n으로 구분된 keywords가 있는 메모장을 불러오기 전, 파일의 경로를 나타내는 FileDIR_Browser가 비어있을 때, 공백으로 채움
-            self.FileDIR_Browser.setPlainText(' ' * 100)
+            self.FileDIR_Browser.setPlainText(' ' * 200)
             self.FileDIR_Browser.horizontalScrollBar().setValue(0)
             self.FileDIR_Browser.setLineWrapMode(0)
 
@@ -146,9 +145,15 @@ class WindowClass(QMainWindow, from_class):  # noqa: F405
                     self.ViewResult_table.setItem(row, col, QTableWidgetItem(str(self.Result[self.index_][col][row])))
 
         def Func_ViewResult_table_admitChanges():
-            for item in self.changed_item:
-                self.Result[item[0]][item[1]][item[2]] = self.ViewResult_table.item(item[2], item[1]).text()
-            self.changed_item = []
+            try:
+                if len(self.Result) != 0:
+                    for item in self.changed_item:
+                        self.Result[item[0]][item[1]][item[2]] = self.ViewResult_table.item(item[2], item[1]).text()
+                    self.changed_item = []
+                else:
+                    QMessageBox.about(self, 'INFO', '수집된 결과가 없습니다.')
+            except:
+                QMessageBox.about(self,'INFO','수집된 Data가 없습니다.')
 
         def Func_FlagEditable_chbox():
             # 실행조건 : FlagEditable_chbox의 상태가 변했을 때
@@ -185,14 +190,17 @@ class WindowClass(QMainWindow, from_class):  # noqa: F405
 
     def Func_activateFunc_btn(self): # 미완
         if len(self.Queryes) != 0:
-            driver_path = '/home/anthonyjo/Desktop/chromedriver'
-            self.Result = [crawling.view(self.Queryes[i], driver_path) for i in range(len(self.Queryes))]
-            for i in self.Queryes:
-                self.SelectKeyword_cbox.addItem(i)
-            self.ViewResult_table.setRowCount(len(self.Result[0][0]))#어차피 길이알고자하는것 따라서 그냥 [0][0]으로 함
-            for col in range(3):
-                for row in range(len(self.Result[0][col])):
-                    self.ViewResult_table.setItem(row, col, QTableWidgetItem(str(self.Result[0][col][row])))
+            self.Result = [crawling.view(self.Queryes[i], self.driver_path) for i in range(len(self.Queryes))]
+            if self.Result[0] == 'driver_path Error':
+                QMessageBox.about(self, 'Error', '크롬드라이버 경로가 잘못되었습니다.')
+                self.Result = []
+            else:
+                for i in self.Queryes:
+                    self.SelectKeyword_cbox.addItem(i)
+                self.ViewResult_table.setRowCount(len(self.Result[0][0]))#어차피 길이알고자하는것 따라서 그냥 [0][0]으로 함
+                for col in range(3):
+                    for row in range(len(self.Result[0][col])):
+                        self.ViewResult_table.setItem(row, col, QTableWidgetItem(str(self.Result[0][col][row])))
         else:
             QMessageBox.about(self, 'INFO','검색할 키워드가 존재하지 않습니다.')
 
@@ -230,14 +238,18 @@ class WindowClass(QMainWindow, from_class):  # noqa: F405
         Path(folder_dir).mkdir(parents=True, exist_ok=True)
         time_ = self.getTime() 
         try:
-            for data_, keyword in zip(self.Result, self.Queryes):
-                data = {}
-                data['Rank'] = data_[3]
-                data['URL'] = data_[0]
-                data['제목'] = data_[1]
-                data['날짜'] = data_[2]
-                df = pd.DataFrame(data)
-                df.to_excel('{}/{}_{}.xlsx'.format(folder_dir, keyword, time_), index=False)
+            if len(self.Result) != 0:
+                for data_, keyword in zip(self.Result, self.Queryes):
+                    data = {}
+                    data['Rank'] = data_[3]
+                    data['URL'] = data_[0]
+                    data['제목'] = data_[1]
+                    data['날짜'] = data_[2]
+                    df = pd.DataFrame(data)
+                    df.to_excel('{}/{}_{}.xlsx'.format(folder_dir, keyword, time_), index=False)
+                QMessageBox.about(self,'INFO','저장완료           ')
+            else:
+                QMessageBox.about(self,'INFO','수집된 Data가 없습니다.')
             
         except:
             QMessageBox.about(self,'INFO','수집된 Data가 없습니다.')
