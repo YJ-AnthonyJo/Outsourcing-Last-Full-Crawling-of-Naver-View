@@ -13,7 +13,7 @@ from urllib import parse
 import time
 
 # for ubuntu
-from pyvirtualdisplay import Display
+#from pyvirtualdisplay import Display
 
 def find_index(data, target):
     res = []
@@ -29,8 +29,8 @@ def find_index(data, target):
 
 def view(keyword, driver_path):
 #for ubuntu
-    display = Display(visible=0, size=(1920, 1080)) 
-    display.start()
+#    display = Display(visible=0, size=(1920, 1080)) 
+#    display.start()
 
 #chrome_options = webdriver.ChromeOptions()
 #chrome_options.add_argument('headless')
@@ -71,7 +71,7 @@ def view(keyword, driver_path):
     print('Data개수 :', len(Urls), len(rank), len(title), len(date))
     driver.close()
 #for ubuntu
-    display.stop()
+    #display.stop()
 
     return [Urls, title, date, rank]
 

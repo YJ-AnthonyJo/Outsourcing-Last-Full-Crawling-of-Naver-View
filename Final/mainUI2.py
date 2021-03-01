@@ -67,19 +67,38 @@ class WindowClass(QMainWindow, from_class):  # noqa: F405
         self.SaveAsFIle_btn.clicked.connect(self.Func_SaveAsFile_btn)
 
         f = open('tmp.txt','r')
-        self.driver_path = f.readlines()[0]
+        txt = f.readlines()
+
+        self.driver_path = txt[0] 
+        self.save_path = txt[1]
+
         if self.driver_path[-1] == '\n':
             self.driver_path = self.driver_path[:-1]
         for_display = (self.driver_path[:40]+'  ...  '+self.driver_path[-40:]) if len(self.driver_path) > 100 else self.driver_path
+
+        if self.save_path[-1] == '\n':
+            self.save_path = self.save_path[:-1]
+        for_display_save = (self.save_path[:40]+'  ...  '+self.save_path[-40:]) if len(self.save_path) > 100 else self.driver_path
+
+
+        self.menubar = self.menuBar()
+
         self.show_current_path = QAction('현제경로 : '+ for_display, self)
         chrome_action = QAction('&ChromeDriver경로 설정', self)
         chrome_action.triggered.connect(self.chrome)
         
-        menubar = self.menuBar()
         chrome_driver = self.menubar.addMenu('&Chrome Driver')
         chrome_driver.addAction(self.show_current_path)
         chrome_driver.addAction(chrome_action)
 
+        
+        self.show_current_path_save = QAction('현제경로 : '+ for_display_save, self)
+        save_dir =  QAction('파일저장위치', self)
+        save_dir.triggered.connect(self.save_dir_f)
+        
+        save_dir_a =  self.menubar.addMenu('파일저장위치')
+        save_dir_a.addAction(self.show_current_path_save)
+        save_dir_a.addAction(save_dir)
 
     def chrome(self):
         fname = QFileDialog.getOpenFileName(self)  # noqa: F405 # file창 하나 열기
@@ -95,6 +114,21 @@ class WindowClass(QMainWindow, from_class):  # noqa: F405
         f = open('tmp.txt','w')
         f.writelines(tmp)
         f.close()
+    def save_dir(self):
+        fname = QFileDialog.getOpenFileName(self)  # noqa: F405 # file창 하나 열기
+
+        self.save_path = fname[0] if fname[0] !='' else self.save_path
+        for_display = (self.driver_path[:40]+'  ...  '+self.driver_path[-40:]) if len(self.driver_path) > 100 else self.driver_path
+        self.show_current_path.setText('현제경로 : '+ for_display)
+
+        f = open('tmp.txt', 'r')
+        tmp = f.readlines()
+        tmp[1] = self.driver_path + '\n'
+        f.close()
+        f = open('tmp.txt','w')
+        f.writelines(tmp)
+        f.close()
+
     def AssociatedQuery(self, funcName):
         # Query(keyword input)과 관련있는 Function들의 집합
         def Func_openFile_btn(): 
