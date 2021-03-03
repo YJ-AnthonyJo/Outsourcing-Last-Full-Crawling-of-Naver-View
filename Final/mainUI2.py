@@ -1,4 +1,4 @@
-import sys
+import sys, ast
 from PyQt5.QtWidgets import *  # noqa: F403
 from PyQt5 import uic, QtCore
 import crawling
@@ -66,69 +66,55 @@ class WindowClass(QMainWindow, from_class):  # noqa: F405
         self.ViewResult_table.cellDoubleClicked.connect(self.AssociatedTable('Func_ViewResult_table_doubleClicked'))
         self.SaveAsFIle_btn.clicked.connect(self.Func_SaveAsFile_btn)
 
-        f = open('tmp.txt','r')
-        txt = f.readlines()
+        f = open('path.json','r')
+        self.path = ast.literal_eval(f.read())
+        f.close()
+        self.for_display = {'driver':None, 'save':None}
 
-        self.driver_path = txt[0] 
-        self.save_path = txt[1]
-
-        if self.driver_path[-1] == '\n':
-            self.driver_path = self.driver_path[:-1]
-        for_display = (self.driver_path[:40]+'  ...  '+self.driver_path[-40:]) if len(self.driver_path) > 100 else self.driver_path
-
-        if self.save_path[-1] == '\n':
-            self.save_path = self.save_path[:-1]
-        for_display_save = (self.save_path[:40]+'  ...  '+self.save_path[-40:]) if len(self.save_path) > 100 else self.driver_path
+        for key in self.path:
+            if self.path[key][-1] == '\n':
+                self.path[key] = self.path[key][:-1]
+            self.for_display[key] = (self.path[key][:40]+'  ...  '+self.path[key][-40:]) if len(self.path[key]) > 100 else self.path[key]
 
 
         self.menubar = self.menuBar()
 
-        self.show_current_path = QAction('현제경로 : '+ for_display, self)
-        chrome_action = QAction('&ChromeDriver경로 설정', self)
-        chrome_action.triggered.connect(self.chrome)
+        self.show_current_path = QAction('현제경로 : '+ self.for_display['driver'], self)###in menubar
+        chrome_action = QAction('&ChromeDriver경로 설정', self)### in menubar
+        chrome_action.triggered.connect(self.chrome)#### for QAction
         
-        chrome_driver = self.menubar.addMenu('&Chrome Driver')
-        chrome_driver.addAction(self.show_current_path)
-        chrome_driver.addAction(chrome_action)
+        chrome_driver = self.menubar.addMenu('&Chrome Driver')# MenuBar
+        chrome_driver.addAction(self.show_current_path)## insert in MenuBar
+        chrome_driver.addAction(chrome_action) ## insert in MenuBar
 
         
-        self.show_current_path_save = QAction('현제경로 : '+ for_display_save, self)
-        save_dir =  QAction('파일저장위치', self)
-        save_dir.triggered.connect(self.save_dir_f)
+        self.show_current_path_save = QAction('현제경로 : '+ self.for_display['save'], self)
+        save_path_action =  QAction('파일저장위치 설정', self)
+        save_path_action.triggered.connect(self.save_dir_f)
         
-        save_dir_a =  self.menubar.addMenu('파일저장위치')
-        save_dir_a.addAction(self.show_current_path_save)
-        save_dir_a.addAction(save_dir)
+        save_dir_a =  self.menubar.addMenu('파일저장위치')# MenuBar
+        save_dir_a.addAction(self.show_current_path_save)## insert in MenuBar
+        save_dir_a.addAction(save_path_action)## insert in MenuBar
 
     def chrome(self):
         fname = QFileDialog.getOpenFileName(self)  # noqa: F405 # file창 하나 열기
 
-        self.driver_path = fname[0] if fname[0] !='' else self.driver_path
-        for_display = (self.driver_path[:40]+'  ...  '+self.driver_path[-40:]) if len(self.driver_path) > 100 else self.driver_path
-        self.show_current_path.setText('현제경로 : '+ for_display)
+        self.path['driver'] = fname[0] if fname[0] !='' else self.path['driver']
+        self.for_display['driver'] = (self.path['driver'][:40]+'  ...  '+self.path['driver'][-40:]) if len(self.path['driver']) > 100 else self.path['driver']
+        self.show_current_path.setText('현제경로 : '+ self.for_display['driver'])
 
-        f = open('tmp.txt', 'r')
-        tmp = f.readlines()
-        tmp[0] = self.driver_path + '\n'
+        self.update_path()
+    def update_path(self):
+        f = open('path.json', 'w')
+        f.write(str(self.path))
         f.close()
-        f = open('tmp.txt','w')
-        f.writelines(tmp)
-        f.close()
-    def save_dir(self):
-        fname = QFileDialog.getOpenFileName(self)  # noqa: F405 # file창 하나 열기
+    def save_dir_f(self):
+        fname = QFileDialog.getExistingDirectory(self, "Select Directory")
+        self.path['save'] = fname if fname != '' else self.path['save']
+        self.for_display['save'] = (self.path['save'][:40]+'  ...  '+self.path['save'][-40:]) if len(self.path['save']) > 100 else self.path['save']
+        self.show_current_path_save.setText('현제경로 : '+ self.for_display['save'])
 
-        self.save_path = fname[0] if fname[0] !='' else self.save_path
-        for_display = (self.driver_path[:40]+'  ...  '+self.driver_path[-40:]) if len(self.driver_path) > 100 else self.driver_path
-        self.show_current_path.setText('현제경로 : '+ for_display)
-
-        f = open('tmp.txt', 'r')
-        tmp = f.readlines()
-        tmp[1] = self.driver_path + '\n'
-        f.close()
-        f = open('tmp.txt','w')
-        f.writelines(tmp)
-        f.close()
-
+        self.update_path()
     def AssociatedQuery(self, funcName):
         # Query(keyword input)과 관련있는 Function들의 집합
         def Func_openFile_btn(): 
@@ -224,7 +210,7 @@ class WindowClass(QMainWindow, from_class):  # noqa: F405
 
     def Func_activateFunc_btn(self): # 미완
         if len(self.Queryes) != 0:
-            self.Result = [crawling.view(self.Queryes[i], self.driver_path) for i in range(len(self.Queryes))]
+            self.Result = [crawling.view(self.Queryes[i], self.path['driver']) for i in range(len(self.Queryes))]
             if self.Result[0] == 'driver_path Error':
                 QMessageBox.about(self, 'Error', '크롬드라이버 경로가 잘못되었습니다.')
                 self.Result = []
@@ -268,7 +254,7 @@ class WindowClass(QMainWindow, from_class):  # noqa: F405
             time = time.replace('-', char)
         return time
     def Func_SaveAsFile_btn(self):
-        folder_dir = 'View전체수집'
+        folder_dir = self.path['save'] + '/View전체수집' if self.path['save'] != 'None' else 'View전체수집'
         Path(folder_dir).mkdir(parents=True, exist_ok=True)
         time_ = self.getTime() 
         try:
